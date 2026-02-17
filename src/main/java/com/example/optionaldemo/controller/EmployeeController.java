@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @RestController
 public class EmployeeController {
     @Autowired
@@ -27,9 +29,8 @@ public class EmployeeController {
 
     @GetMapping("/get")
     public String getEmployeeById(){
-        Employee employee= repository.getEmployeeById();
-        return employee.getName();
-
+        Optional<Employee> employee= repository.getEmployeeById();
+        return employee.map(e2 -> e2.getName()).orElse("No employee found with the given id");
     }
 
 
